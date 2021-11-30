@@ -18,6 +18,7 @@ class sitesServices {
 			temperature: data.temperature,
 			recommendedSites: data.recommendedSites,
 			image: data.image,
+			score: data.score
 		}
 
 		if (!data) {
