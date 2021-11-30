@@ -19,7 +19,7 @@ const connectBD = (callback) =>{
             console.error('Error conectando a la base de datos');
             return 'error';
         }
-        conexionBd = db.db('cellphone');
+        conexionBd = db.db('touristsites');
         console.log('Conexion Exitosa');
         return callback();
     });

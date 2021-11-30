@@ -25,52 +25,52 @@ class sitesServices {
 		if (!data) {
 			throw boom.badData('No se puede crear este objeto');
 		}
-		await connection.collection("ventas").insertOne(object);
+		await connection.collection("Sites").insertOne(object);
 	}
 
 	async find() {
 		const conexionBd = getBD();
 		//implementar el codigo paa crar el producto en la BD
-		const resultado = await conexionBd.collection('ventas').find({}).toArray();
+		const resultado = await conexionBd.collection('Sites').find({}).toArray();
 		if (resultado.length === 0) {
-			throw boom.notFound('No se encuentran ventas');
+			throw boom.notFound('No se encuentran sitios');
 		}
 		return resultado;
 	}
 
-	async findOne(_idVenta) {
+	async findOne(_idSite) {
 		const connection = getBD(); //conexion a la db
 
-		const id = {_id: ObjectId(_idVenta)};
-		const res = await connection.collection('ventas').findOne(id);
+		const id = {_id: ObjectId(_idSite)};
+		const res = await connection.collection('Sites').findOne(id);
 		if(res === null){
-			throw boom.notFound('Venta no encontrada');
+			throw boom.notFound('Sitio no encontrado');
 		}
 		return res;
 	}
 
 	async update(id, changes) {
 		const conexionBd = getBD();
-		const filtrarProducto = { _id: ObjectId(id) };
-		const venta = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
-		if (venta.length === 0) {
-			throw boom.notFound('Venta no encontrada');
+		const filtrarSite = { _id: ObjectId(id) };
+		const sitio = await conexionBd.collection('Sites').find(filtrarSite).toArray();
+		if (sitio.length === 0) {
+			throw boom.notFound('Sitio no encontrado');
 		} else {
 			const operacion = { $set: changes, };
-			const updated = await conexionBd.collection('ventas').updateOne(filtrarProducto, operacion, { upsert: false, returnOriginal: true });
-			const resultado = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
+			const updated = await conexionBd.collection('Sites').updateOne(filtrarSite, operacion, { upsert: false, returnOriginal: true });
+			const resultado = await conexionBd.collection('Sites').find(filtrarSite).toArray();
 			return resultado;
 		}
 	}
 
 	async delete(id) {
 		const conexionBd = getBD();
-		const filtrarProducto = { _id: ObjectId(id) };
-		const venta = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
-		if (venta.length === 0) {
-			throw boom.notFound('Venta no encontrada');
+		const filtrarSite = { _id: ObjectId(id) };
+		const sitio = await conexionBd.collection('Sites').find(filtrarSite).toArray();
+		if (sitio.length === 0) {
+			throw boom.notFound('Sitio no encontrado');
 		} else {
-			const remove = await conexionBd.collection('ventas').deleteOne(filtrarProducto);
+			const remove = await conexionBd.collection('Sites').deleteOne(filtrarSite);
 			return { id };
 		}
 	}

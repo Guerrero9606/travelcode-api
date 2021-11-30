@@ -1,19 +1,30 @@
 const joi = require('joi');
 
-const id = joi.string().uuid();
-const name = joi.string().min(3).max(15);
-const price = joi.number().integer().min(10);
+const id = joi.string().hex();
+const title = joi.string().min(3).max(15);
+const descriptionShort = joi.string().min(3).max(500);
+const descriptionLarge = joi.string().min(5000);
+const location = joi.string().min(3).max(500);
+const temperature = joi.string().min(3).max(10);
+const recommendedSites = joi.string().min(3).max(500)
 const image = joi.string().uri();
 
 const createSitesSchema = joi.object({
-	name: name.required(),
-	price: price.required(),
-	image: image.required()
+	title: title.required(),
+	descriptionShort: descriptionShort.required(),
+	descriptionLarge: descriptionLarge.required(),
+	location: location.required(),
+	temperature: temperature.required(),
+	recommendedSites: recommendedSites.required()
 });
 
 const updateSitesSchema = joi.object({
-	name: name,
-	price: price,
+	title: title,
+	descriptionShort: descriptionShort,
+	descriptionLarge: descriptionLarge,
+	location: location,
+	temperature: temperature,
+	recommendedSites: recommendedSites,
 	image: image
 });
 
