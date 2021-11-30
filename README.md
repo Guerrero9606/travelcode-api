@@ -13,4 +13,5 @@
 
 - API en Node JS
 - Metodos basicos, GET, UPDATE, PATCH, DELETE
+- Base de datos Mongo DB
 - URL del Front del App: https://github.com/TravelCodeMinTic/ProyectoCiclo4

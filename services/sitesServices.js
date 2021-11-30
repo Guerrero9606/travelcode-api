@@ -1,70 +1,79 @@
-//const faker = require( 'faker' );
-const boom = require( '@hapi/boom' );
+import boom from '@hapi/boom';
+import { ObjectId } from 'mongodb';
+import { getBD } from '../../DB/conexion.js';
 
 class sitesServices {
 	constructor() {
-		//this.sites = [];
+		//this.ventas = [];
 		//this.generate();
 	}
-	/*
-	generate() {
-		const limit = 100;
-		for ( let index = 0; index < limit; index++ ) {
-			this.productos.push( {
-				id: faker.datatype.uuid(),
-				name: faker.commerce.productName(),
-				price: parseInt( faker.commerce.price(), 10 ),
-				image: faker.image.imageUrl(),
-			} );
-		}
-	}*/
 
-	async create( data ) {
-		const newProducto = {
-			id: faker.datatype.uuid(),
-			...data
-		};
-		this.productos.push( newProducto );
-		return newProducto;
+	async create(data) {
+		const connection = getBD();
+		const object = {
+			idProduct: ObjectId(data.idProduct),
+			vTotal: data.vTotal,
+			amount: data.amount,
+			price: data.price,
+			dateV: data.dateV,
+			state: data.state,
+			idVendedor: ObjectId(data.idVendedor),
+			nameC: data.nameC,
+			Documento: data.Documento,
+		}
+
+		if (!data) {
+			throw boom.badData('No se puede crear este objeto');
+		}
+		await connection.collection("ventas").insertOne(object);
 	}
 
 	async find() {
-		const producto = this.productos;
-		if ( !producto ) {
-			throw boom.notFound( 'Producto no encontrado' );
+		const conexionBd = getBD();
+		//implementar el codigo paa crar el producto en la BD
+		const resultado = await conexionBd.collection('ventas').find({}).toArray();
+		if (resultado.length === 0) {
+			throw boom.notFound('No se encuentran ventas');
 		}
-		return producto;
+		return resultado;
 	}
 
-	async findOne( id ) {
-		const producto = this.productos.find( item => item.id === id );
-		if ( !producto ) {
-			throw boom.notFound( 'Producto no encontrado' );
+	async findOne(_idVenta) {
+		const connection = getBD(); //conexion a la db
+
+		const id = {_id: ObjectId(_idVenta)};
+		const res = await connection.collection('ventas').findOne(id);
+		if(res === null){
+			throw boom.notFound('Venta no encontrada');
 		}
-		return producto;
+		return res;
 	}
 
-	async update( id, changes ) {
-		const index = this.productos.findIndex( item => item.id === id );
-		if ( index === -1 ) {
-			throw boom.notFound( 'Producto no encontrado' );
+	async update(id, changes) {
+		const conexionBd = getBD();
+		const filtrarProducto = { _id: ObjectId(id) };
+		const venta = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
+		if (venta.length === 0) {
+			throw boom.notFound('Venta no encontrada');
+		} else {
+			const operacion = { $set: changes, };
+			const updated = await conexionBd.collection('ventas').updateOne(filtrarProducto, operacion, { upsert: false, returnOriginal: true });
+			const resultado = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
+			return resultado;
 		}
-		const producto = this.productos[ index ];
-		this.productos[ index ] = {
-			...producto,
-			...changes
-		};
-		return this.productos[ index ];
 	}
 
-	async delete( id ) {
-		const index = this.productos.findIndex( item => item.id === id );
-		if ( index === -1 ) {
-			throw boom.notFound( 'Producto no encontrado' );
+	async delete(id) {
+		const conexionBd = getBD();
+		const filtrarProducto = { _id: ObjectId(id) };
+		const venta = await conexionBd.collection('ventas').find(filtrarProducto).toArray();
+		if (venta.length === 0) {
+			throw boom.notFound('Venta no encontrada');
+		} else {
+			const remove = await conexionBd.collection('ventas').deleteOne(filtrarProducto);
+			return { id };
 		}
-		this.productos.splice( index, 1 );
-		return { id };
 	}
 }
 
-module.exports = sitesServices;
+export default sitesServices;
