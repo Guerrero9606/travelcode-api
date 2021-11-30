@@ -1,0 +1,24 @@
+{
+    "name": "my-store",
+    "version": "1.0.0",
+    "description": "API TravelCode",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js",
+        "lint": "eslint"
+    },
+    "dependencies": {
+        "@hapi/boom": "^9.1.4",
+        "cors": "^2.8.5",
+        "eslint": "^8.3.0",
+        "express": "^4.17.1",
+        "joi": "^17.4.2",
+        "nodemon": "^2.0.15"
+    },
+    "devDependencies": {
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.5.0"
+    }
+}
