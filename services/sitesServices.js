@@ -1,6 +1,6 @@
-import boom from '@hapi/boom';
-import { ObjectId } from 'mongodb';
-import { getBD } from '../../DB/conexion.js';
+const boom = require('@hapi/boom');
+const { ObjectId } = require('mongodb');
+const { getBD } = require('../DB/conexion.js');
 
 class sitesServices {
 	constructor() {
@@ -11,15 +11,13 @@ class sitesServices {
 	async create(data) {
 		const connection = getBD();
 		const object = {
-			idProduct: ObjectId(data.idProduct),
-			vTotal: data.vTotal,
-			amount: data.amount,
-			price: data.price,
-			dateV: data.dateV,
-			state: data.state,
-			idVendedor: ObjectId(data.idVendedor),
-			nameC: data.nameC,
-			Documento: data.Documento,
+			title: data.title,
+			descriptionShort: data.descriptionShort,
+			descriptionLarge: data.descriptionLarge,
+			location: data.location,
+			temperature: data.temperature,
+			recommendedSites: data.recommendedSites,
+			image: data.image,
 		}
 
 		if (!data) {
@@ -76,4 +74,4 @@ class sitesServices {
 	}
 }
 
-export default sitesServices;
+module.exports = sitesServices;

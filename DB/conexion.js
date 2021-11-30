@@ -1,5 +1,5 @@
-import {MongoClient} from 'mongodb';
-import dotenv from 'dotenv';
+const {MongoClient} = require('mongodb');
+const dotenv = require('dotenv');
 
 dotenv.config({ path: './.env' });
 
@@ -29,4 +29,4 @@ const getBD =() => {
     return conexionBd;
 };
 
-export {connectBD, getBD};
+module.exports = {connectBD, getBD};

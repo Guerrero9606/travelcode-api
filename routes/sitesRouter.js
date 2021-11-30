@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const express = require("express");
-const sitesServices = require('./../services/sitesServices');
-const validatorHandler = require('./../middlewares/validator.handler');
-const { createSitesSchema, updateSitesSchema, getSitesSchema } = require('./../schemas/sites.schema');
+const sitesServices = require('../services/sitesServices');
+const validatorHandler = require('../middlewares/validator.handler');
+const { createSitesSchema, updateSitesSchema, getSitesSchema } = require('../schemas/sites.schema');
 
 const router = express.Router();
 const service = new sitesServices();

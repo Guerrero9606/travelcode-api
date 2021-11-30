@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { connectBD } = require('./DB/conexion.js');
 const routerApi = require('./routes');
+const dotenv = require('dotenv');
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
 
 dotenv.config({ path: './.env' });
