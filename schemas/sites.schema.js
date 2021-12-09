@@ -9,6 +9,8 @@ const temperature = joi.string().min(3).max(10);
 const recommendedSites = joi.string().min(3).max(500)
 const image = joi.string().uri();
 const score = joi.number().min(1).max(100);
+const longitud = joi.number().min(-990000000).max(990000000);
+const latitud = joi.number().min(-990000000).max(990000000);
 
 const createSitesSchema = joi.object({
 	title: title.required(),
@@ -18,7 +20,9 @@ const createSitesSchema = joi.object({
 	temperature: temperature.required(),
 	recommendedSites: recommendedSites.required(),
 	image: image.required(),
-	score: score.required()
+	score: score.required(),
+	latitud: latitud.required(),
+	longitud: longitud.required()
 });
 
 const updateSitesSchema = joi.object({
@@ -29,7 +33,9 @@ const updateSitesSchema = joi.object({
 	temperature: temperature,
 	recommendedSites: recommendedSites,
 	image: image,
-	score: score
+	score: score,
+	latitud: latitud,
+	longitud: longitud
 });
 
 const getSitesSchema = joi.object({
